@@ -1,0 +1,9 @@
+@import '../../style/variables.scss';
+
+.app {
+  position: relative;
+
+  .main {
+    margin: 0 $sideMargin;
+  }
+}

@@ -1,0 +1,35 @@
+@import '../../style/variables.scss';
+
+.btn {
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  font-size: 17px;
+  width: 140px;
+  height: 44px;
+  border: 2px solid #41435a;
+  background: $primary-color;
+  color: #fff;
+  border-radius: 5px;
+  transition: all 0.4s ease-out;
+  outline: none;
+
+  &:hover {
+    background-color: #353544;
+  }
+
+  &:disabled {
+    background-color: whitesmoke;
+  }
+
+  &:global(.btn-secondary) {
+    // #797979
+    background-color: #fff;
+    color: $secondary-color;
+    border: 2px solid $secondary-color;
+
+    &:hover {
+      color: #fff;
+      background: $secondary-color;
+    }
+  }
+}
