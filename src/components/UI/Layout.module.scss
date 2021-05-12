@@ -2,6 +2,7 @@
 
 .app {
   position: relative;
+  overflow-x: hidden;
 
   .main {
     margin: 0 $sideMargin;
