@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import style from './MainNavigation.module.scss';
 import ClickableIcon from './ClickableIcon';
+import { BREAKPOINT_MOBILE } from '../../global-constants';
 
 const MainNavigation = () => {
   const [isDarwerOpen, setIsDarwerOpen] = useState(false);
@@ -10,9 +11,12 @@ const MainNavigation = () => {
     ? style['drawer-open']
     : style['drawer-close'];
 
-  console.log(drawerClassName);
   const toggleDrawer = () => {
-    setIsDarwerOpen((isDarwerOpen) => !isDarwerOpen);
+    const isMobileSize = window.innerWidth < BREAKPOINT_MOBILE;
+
+    if (isMobileSize) {
+      setIsDarwerOpen((isDarwerOpen) => !isDarwerOpen);
+    }
   };
 
   return (
@@ -30,12 +34,18 @@ const MainNavigation = () => {
             />
           </li>
           <li>
-            <NavLink exact activeClassName={style['navlink-active']} to="/">
+            <NavLink
+              onClick={toggleDrawer}
+              exact
+              activeClassName={style['navlink-active']}
+              to="/"
+            >
               Products
             </NavLink>
           </li>
           <li>
             <NavLink
+              onClick={toggleDrawer}
               exact
               activeClassName={style['navlink-active']}
               to="/add-product"
