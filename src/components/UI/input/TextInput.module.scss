@@ -1,0 +1,24 @@
+.label {
+  display: block;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.text-input {
+  padding: 12px;
+  box-sizing: border-box;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid #42424261;
+  font-size: 16px;
+
+  &:focus {
+    border: 1px solid #4281a661;
+    box-shadow: 0 0 4px #4281a661;
+  }
+
+  &.error {
+    border-color: #f52727;
+    box-shadow: none;
+  }
+}

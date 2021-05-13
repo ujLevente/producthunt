@@ -12,7 +12,7 @@ const MainNavigation = () => {
     : style['drawer-close'];
 
   const toggleDrawer = () => {
-    const isMobileSize = window.innerWidth < BREAKPOINT_MOBILE;
+    const isMobileSize = window.innerWidth < BREAKPOINT_MOBILE; //TODO kivenni v lecserlni
 
     if (isMobileSize) {
       setIsDarwerOpen((isDarwerOpen) => !isDarwerOpen);
