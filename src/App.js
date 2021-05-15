@@ -1,14 +1,15 @@
 import { Route, Switch } from 'react-router-dom';
-import NotFound from './pages/NotFound';
+import Layout from './components/layout/Layout';
 import AddProduct from './pages/AddProduct';
-import Layout from './components/UI/Layout';
+import NotFound from './pages/NotFound';
+import Products from './pages/Products';
 
 function App() {
   return (
     <Layout>
       <Switch>
         <Route path="/" exact>
-          <p>fo eoldal</p>
+          <Products />
         </Route>
         <Route path="/add-product">
           <AddProduct />

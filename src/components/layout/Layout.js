@@ -6,9 +6,7 @@ const Layout = (props) => {
   return (
     <div className={style.app}>
       <MainNavigation />
-      <main className={style.main} style={{ height: '1000px' }}>
-        {props.children}
-      </main>
+      <main className={style.main}>{props.children}</main>
     </div>
   );
 };

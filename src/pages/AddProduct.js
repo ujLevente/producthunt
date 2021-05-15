@@ -1,16 +1,29 @@
 import { Card, CardContent } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import ProductForm from '../components/product/ProductForm';
+import useAsync from '../hooks/use-async';
+import sendRequest from '../lib/api';
 
 const AddProduct = () => {
+  const { execute, error, isInprogres } = useAsync(sendRequest);
+
+  // useEffect(() => {
+  //   if (!error)
+  // }, )
+
+  const onSubmit = async (values, helpers) => {
+    const result = await execute('/products', values, 'POST');
+    helpers.setSubmitting(false);
+
+    // if (result.status === 'succes') {
+
+    // }
+  };
+
   return (
     <Card>
       <CardContent>
-        {/* <Typography variant="body2" color="textSecondary" component="p">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
-        </Typography> */}
-        <ProductForm />
+        <ProductForm onSubmit={onSubmit} error={error} isInprogres />
       </CardContent>
     </Card>
   );

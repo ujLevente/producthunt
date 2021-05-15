@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import style from './MainNavigation.module.scss';
-import ClickableIcon from './ClickableIcon';
+import ClickableIcon from '../UI/ClickableIcon';
 import { BREAKPOINT_MOBILE } from '../../global-constants';
 
 const MainNavigation = () => {
