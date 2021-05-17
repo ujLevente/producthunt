@@ -5,9 +5,11 @@ import {
   CardContent,
   makeStyles,
   Typography,
-  useTheme,
 } from '@material-ui/core';
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import useDialog from '../../hooks/use-dialog';
+import AddReviewDialog from './AddReviewDialog';
 
 const useStyles = makeStyles((theme) => ({
   productName: {
@@ -19,15 +21,48 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 14,
     color: '#6466d4',
   },
+  editLink: {
+    '&:hover': {
+      textDecoration: 'none',
+    },
+  },
 }));
 
-const ProductItem = ({ productName, description, activeDate }) => {
+const ProductItem = ({
+  id,
+  productName,
+  description,
+  activeDate,
+  handleDelete,
+}) => {
   const classes = useStyles();
+  const { isOpen, handleClose, handleOpen } = useDialog(false);
+  const [reviews, setReviews] = useState([]);
+
+  const handleSubmit = (text) => {
+    setReviews((prevState) => {
+      return [...reviews, text];
+    });
+    handleClose();
+  };
 
   return (
     <Card>
+      <AddReviewDialog
+        show={isOpen}
+        handleClose={handleClose}
+        handleSubmit={handleSubmit}
+      />
       <CardContent>
-        <Typography variant="h5">{productName}</Typography>
+        <Button onClick={handleDelete.bind(this, id)}>Delete</Button>
+        <Typography
+          variant="h5"
+          component={Link}
+          to={`/products/${id}`}
+          color="textPrimary"
+        >
+          {productName}
+        </Typography>
         <Typography
           className={classes.date}
           color="primary"
@@ -41,13 +76,23 @@ const ProductItem = ({ productName, description, activeDate }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button onClick={handleOpen} size="small" color="primary">
           Add review
         </Button>
-        <Button size="small" color="primary">
+        <Button
+          className={classes.editLink}
+          size="small"
+          color="primary"
+          component={Link}
+          exact="true"
+          to={`/edit-product/${id}`}
+        >
           Edit
         </Button>
       </CardActions>
+      {reviews.map((review) => {
+        return <div key={review}>{review}</div>;
+      })}
     </Card>
   );
 };

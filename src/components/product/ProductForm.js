@@ -1,5 +1,5 @@
 import DateFnsUtils from '@date-io/date-fns';
-import { Box, Button, Grid, makeStyles, Typography } from '@material-ui/core';
+import { Box, Button, Grid, makeStyles } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { Form, Formik } from 'formik';
@@ -8,12 +8,6 @@ import * as Yup from 'yup';
 import DatePickerWrapper from '../UI/input/DatePickerWrapper';
 import TextFieldWrapper from '../UI/input/TextFieldWrapper';
 import LoadingMask from '../UI/LoadingMask';
-
-const initialValues = {
-  productName: '',
-  description: '',
-  activeDate: null,
-};
 
 const validationSchema = Yup.object({
   productName: Yup.string()
@@ -37,14 +31,11 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const ProductForm = ({ onSubmit, error }) => {
+const ProductForm = ({ onSubmit, initialValues, error }) => {
   const classes = useStyles();
 
   return (
     <>
-      <Typography gutterBottom variant="h5">
-        Add new product
-      </Typography>
       {error && <Alert severity="error">{error}</Alert>}
       <div className={classes.formWrapper}>
         <Formik

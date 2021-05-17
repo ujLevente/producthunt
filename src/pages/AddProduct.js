@@ -1,29 +1,47 @@
-import { Card, CardContent } from '@material-ui/core';
+import { Card, CardContent, Typography } from '@material-ui/core';
 import React, { useEffect } from 'react';
+import { useHistory } from 'react-router';
 import ProductForm from '../components/product/ProductForm';
-import useAsync from '../hooks/use-async';
+import useAsync, { statuses } from '../hooks/use-async';
 import sendRequest from '../lib/api';
 
-const AddProduct = () => {
-  const { execute, error, isInprogres } = useAsync(sendRequest);
+const initialValues = {
+  productName: '',
+  description: '',
+  activeDate: null,
+};
 
+const AddProduct = () => {
+  const { execute, data, error, status } = useAsync(sendRequest);
+  const history = useHistory();
+  console.log(data, error, status);
+  // console.log(error, status, 1);
   // useEffect(() => {
-  //   if (!error)
-  // }, )
+  //   if (status === statuses.COMPLETED) {
+  //     history.push('/');
+  //   }
+  // }, [status, history]);
 
   const onSubmit = async (values, helpers) => {
-    const result = await execute('/products', values, 'POST');
+    const status2 = await execute('/products', values, 'POST');
+    console.log('GECIii');
     helpers.setSubmitting(false);
-
-    // if (result.status === 'succes') {
-
-    // }
+    if (status2 === statuses.COMPLETED) {
+      history.push('/');
+    }
   };
 
   return (
     <Card>
       <CardContent>
-        <ProductForm onSubmit={onSubmit} error={error} isInprogres />
+        <Typography gutterBottom variant="h5">
+          Add new product
+        </Typography>
+        <ProductForm
+          onSubmit={onSubmit}
+          error={error}
+          initialValues={initialValues}
+        />
       </CardContent>
     </Card>
   );

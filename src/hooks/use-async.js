@@ -1,27 +1,37 @@
 import { useCallback, useState } from 'react';
 
-// export const statuses = {
-//     PENDING: 'pending',
-//     CO
-// }
+export const statuses = {
+  //request stauses adj v globálba
+  PENDING: 'pending',
+  COMPLETED: 'completed',
+  ERROR: 'error',
+};
 
 const useAsync = (asyncFn, immidiate = false) => {
   const [data, setData] = useState();
   const [error, setError] = useState();
-  const [isInprogres, setIsInprogres] = useState(false);
+  const [status, setStatus] = useState(immidiate ? statuses.PENDING : null);
 
   const execute = useCallback(
     async (...params) => {
-      setIsInprogres(true);
+      setStatus(statuses.PENDING);
       setError(null);
+      setData(null);
+
+      let resolvedStatus = null;
 
       try {
         const data = await asyncFn(...params);
         setData(data);
+        resolvedStatus = statuses.COMPLETED;
       } catch (error) {
+        console.error(error);
         setError(error.message);
+        resolvedStatus = statuses.ERROR;
       }
-      setIsInprogres(false);
+
+      setStatus(resolvedStatus);
+      return resolvedStatus;
     },
     [asyncFn]
   );
@@ -30,7 +40,7 @@ const useAsync = (asyncFn, immidiate = false) => {
     execute,
     data,
     error,
-    isInprogres,
+    status,
   };
 };
 

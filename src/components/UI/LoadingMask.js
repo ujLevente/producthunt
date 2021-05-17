@@ -7,6 +7,10 @@ import reactDom from 'react-dom';
 const useStyles = makeStyles((theme) => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+  },
+  circularProgress: {
+    animationDuration: '550ms',
     color: '#fff',
   },
 }));
@@ -22,7 +26,12 @@ const LoadingMask = ({ show }) => {
     <>
       {reactDom.createPortal(
         <Backdrop className={classes.backdrop} open={true}>
-          <CircularProgress color="inherit" />
+          <CircularProgress
+            className={classes.circularProgress}
+            disableShrink
+            size={40}
+            thickness={4}
+          />
         </Backdrop>,
         document.getElementById('loading-mask-root')
       )}

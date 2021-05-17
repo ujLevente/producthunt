@@ -13,7 +13,7 @@ const MainNavigation = () => {
 
   const toggleDrawer = () => {
     const isMobileSize = window.innerWidth < BREAKPOINT_MOBILE; //TODO kivenni v lecserlni
-
+    // lehetne alapból nézni h nyitva van e amikor nyomom
     if (isMobileSize) {
       setIsDarwerOpen((isDarwerOpen) => !isDarwerOpen);
     }

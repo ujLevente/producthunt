@@ -3,20 +3,22 @@ import { Alert } from '@material-ui/lab';
 import React, { useEffect } from 'react';
 import ProductList from '../components/product/ProductList';
 import LoadingMask from '../components/UI/LoadingMask';
-import useAsync from '../hooks/use-async';
+import useAsync, { statuses } from '../hooks/use-async';
 import sendRequest from '../lib/api';
 
 const Products = () => {
-  const { execute, data, error, isInprogres } = useAsync(sendRequest, true);
+  const { execute, data, error, status } = useAsync(sendRequest, true);
 
   useEffect(() => {
     execute('/products');
   }, [execute]);
 
-  let content;
+  if (status === statuses.PENDING) {
+    return <LoadingMask show={true} />;
+  }
 
   if (error) {
-    content = (
+    return (
       <>
         <Box display="flex" flexDirection="column">
           <Alert severity="error">{error}</Alert>
@@ -31,16 +33,9 @@ const Products = () => {
         </Box>
       </>
     );
-  } else {
-    content = <ProductList data={data} />;
   }
 
-  return (
-    <>
-      <LoadingMask show={isInprogres} />
-      {content}
-    </>
-  );
+  return <ProductList data={data} />;
 };
 
 export default Products;
